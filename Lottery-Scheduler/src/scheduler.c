@@ -49,7 +49,6 @@ int get_random(int min, int max){
     int random_number = min + rand() % (max-min+1);
     return random_number;
 }
-
 struct Task *schedule(){
     int counter = 0;
 
@@ -73,13 +72,14 @@ int main(int argc, char *argv[])
     insert_task("nvim", 30);
     
     int x = 0;
-    while(x <= 10){
+    
+    while(x < 3){
 
         struct Task *winner_task = schedule(); 
-
         printf("winner task = %s, pid : %d\n", winner_task->task_name, winner_task->pid);
+        ++x;
     }
-    
+   
     
 }
 

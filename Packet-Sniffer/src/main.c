@@ -4,15 +4,18 @@
 #include <pcap.h>
 #define BUFFER_CAPACITY 100
 
-typedef struct{
+/*
+struct Packet_info
+
+*/
+struct Ring_Buffer{
     int32_t buffer[BUFFER_CAPACITY];
     size_t size; 
     size_t head;
     size_t tail;
     size_t count;
-}Ring_Buffer;
-
-static Ring_Buffer ring_buffer; 
+};
+static struct Ring_Buffer ring_buffer; 
 
 void init_ring_buffer(void){
 

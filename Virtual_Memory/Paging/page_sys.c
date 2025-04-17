@@ -15,12 +15,15 @@ struct PageTableEntry{
     unsigned int reserved: 7; 
 };
 
-struct PageTableEntry page_table[NUM_PAGES]; 
-
 struct PhysicalFrame{
     unsigned int allocted: 1; 
     unsigned int process_id; 
-}
+};
+
+
+static struct PhysicalFrame  physical_frames[NUM_PAGES];
+static struct PageTableEntry page_table[NUM_PAGES]; 
+
 
 void init_page_table()
 {
@@ -37,6 +40,15 @@ void init_page_table()
     }
 }
 
+void caculate_vpn(unsigned int virtual_address)
+{
+    unsigned int vpn;
+    unsigned int pte_address;
+    unsigned int offset; 
+    unsigned int phys_addr; 
+
+    vpn 
+}
 unsigned int translate_address(unsigned int virtual_address)
 {
     unsigned int page_number = virtual_address / PAGE_SIZE; 
