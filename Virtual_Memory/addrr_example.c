@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
     int x = 10; 
     int *xptr = &x;
 
-    printf("addrr %p\n", xptr);
+    printf("addrr %p\n", &x);
     return EXIT_SUCCESS;
 }
 
