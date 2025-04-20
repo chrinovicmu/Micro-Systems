@@ -31,25 +31,7 @@ typedef struct{
 }__attribute__((aligned(CACHE_LINE_SIZE))) ring_buffer_t; 
 
 
-/*
- * NORMAL PUSH OPERATION 
- 
-int push(ring_buffer_t *const rb, void* value)
-{
-    if((rb>head - rb->tail) == rb->capacity)
-    {
-        return 1; 
-    }
-    rb->buffer[rb->head % rb->capacity] == value; 
-    ++rb->head; 
-
-    return 0; 
-}
-*/ 
-
-/*ATOMIC PUSH OPERATION */ 
-
-int ring_buffer_init(ring_buffer_t *const rb, unsigned int capacity)
+inline int ring_buffer_init(ring_buffer_t *const rb, unsigned int capacity)
 {
     rb->capacity =align32_pow2(capacity); 
     rb->mask =  rb->capacity - 1; 
@@ -61,7 +43,7 @@ int ring_buffer_init(ring_buffer_t *const rb, unsigned int capacity)
     return 1; 
 }
 
-int push(ring_buffer_t *const rb, void *const value)
+inline int push(ring_buffer_t *const rb, void *const value)
 {
 
     __atomic_load(&rb->tail, &rb->cached_tail, __ATOMIC_ACQUIRE);
@@ -77,23 +59,7 @@ int push(ring_buffer_t *const rb, void *const value)
     return 1; 
 }
 
-/*
- * NORMAL POP OPERATION
- 
-int pop(ring_buffer_t *const rb, void ** value)
-{
-    if((rb->head - rb->tail) == 0)
-    {
-        return 0; 
-    }
-
-    *value = rb->buffer[rb->tail % rb->capacity]; 
-    ++rb->tail; 
-    return 1; 
-}
-*/ 
-
-int pop(ring_buffer_t *const rb, void ** const value)
+inline int pop(ring_buffer_t *const rb, void ** value)
 {
 
     __atomic_load(&rb->head, &rb->cached_head, __ATOMIC_ACQUIRE); 
